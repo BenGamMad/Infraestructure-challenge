@@ -14,3 +14,7 @@ module "development" {
   source = "./Environments/Develop"
   
 }
+
+module "staging" {
+  source = "./Environments/Staging"
+}
