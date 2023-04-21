@@ -29,12 +29,13 @@ pipeline{
         stage("Terraform Plan"){
             steps{
                 sh ("terraform plan -out tfplan")
-                sh ("terraform show -no-color tfplan > tfplan.txt")
+                
             }
            
         }
         stage('Approval') {
            when {
+
                not {
                    equals expected: true, actual: params.autoApprove
                }
@@ -50,7 +51,7 @@ pipeline{
        }
        stage('Apply') {
             steps {
-                sh "terraform apply -input=false tfplan"
+                sh "terraform apply -plan=tfplan"
             }
         }
     }
