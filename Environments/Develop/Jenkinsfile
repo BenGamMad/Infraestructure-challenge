@@ -17,28 +17,12 @@ pipeline{
                 echo "========executing initialization========"
                 sh ("terraform init")
             }
-            /*post{
-                always{
-                    echo "========always========"
-                }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
-                }
-            }*/
+        }
+        stage("Terraform Plan"){
+            steps{
+                sh ("terraform plan")
+            }
+           
         }
     }
-    /*post{
-        always{
-            echo "========always========"
-        }
-        success{
-            echo "========pipeline executed successfully ========"
-        }
-        failure{
-            echo "========pipeline execution failed========"
-        }
-    }*/
 }
