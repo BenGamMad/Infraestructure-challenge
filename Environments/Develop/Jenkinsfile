@@ -1,6 +1,17 @@
 pipeline{
     agent any
     stages{
+        stage('Git checkout') {
+            steps {
+                 script{
+                        dir("terraform")
+                        {
+                            git "https://github.com/BenGamMad/Infraestructure-challenge.git"
+                        }
+                    }
+                }
+        }
+
         stage("Terraform Init"){
             steps{
                 echo "========executing initialization========"
