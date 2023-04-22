@@ -6,7 +6,7 @@ module "prod-network" {
 
 module "prod-server" {
     source = "../../Server"
-    count = 4
+    count = 5
     instance_name = "Production-Website"
     instance_type = "t2.micro"
 }
