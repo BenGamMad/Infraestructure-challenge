@@ -36,7 +36,7 @@ pipeline{
             }
            
         }
-        stage('Approval') {
+        /*stage('Approval') {
            when {
 
                 not {
@@ -51,7 +51,7 @@ pipeline{
                     parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                }
            }
-       }
+       }*/
        stage('Apply') {
             when { 
                 anyOf{
