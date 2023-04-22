@@ -54,7 +54,7 @@ pipeline{
        }*/
        stage('Apply') {
             when { 
-                anyOf{
+                not{
                     environment name: 'ACTION', value: 'apply'
                 }
             }
