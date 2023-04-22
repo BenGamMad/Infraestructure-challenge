@@ -90,7 +90,7 @@ pipeline{
 						]
                     )
                     if (IS_APPROVED == 'Yes') {
-						sh "terraform destroy"
+						sh "terraform destroy --auto-approve"
 					}
                 }
                
