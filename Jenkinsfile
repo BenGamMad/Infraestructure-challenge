@@ -76,7 +76,7 @@ pipeline{
         }
         stage("Destroy"){
             when { 
-                anyOf{
+                not{
 					environment name: 'ACTION', value: 'destroy';
 				}
 			}
