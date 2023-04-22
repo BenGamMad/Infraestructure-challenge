@@ -90,7 +90,7 @@ pipeline{
 						]
                     )
                     if (IS_APPROVED == 'Yes') {
-						sh "terraform destroy -input=false tfplan"
+						sh "terraform destroy tfplan"
 					}
                 }
                
