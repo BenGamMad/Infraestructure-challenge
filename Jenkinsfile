@@ -34,6 +34,7 @@ pipeline{
 						]
                     )
                     if (IS_APPROVED == 'Yes') {
+                        sh ("terraform init")
 						sh ("terraform init -backend-config=.terraform/terraform.tfstate")
 
 					}
