@@ -34,7 +34,7 @@ pipeline{
 						]
                     )
                     if (IS_APPROVED == 'Yes') {
-                        sh ("terraform init")
+                        //sh ("terraform init")
 						sh ("terraform init -backend-config=/var/jenkins_home/workspace/Multibranch_Terraform_master/terraform.tfstate")
 
 					}
