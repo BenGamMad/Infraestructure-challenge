@@ -25,8 +25,20 @@ pipeline{
             steps{
                 echo "========INITIALIZING========"
                 sh ("terraform init")
-                sh ("terraform init -backend-config=.terraform/terraform.tfstate")
+                script{
+                    def IS_APPROVED = input(
+						message: "Change preexisting state !?!",
+						ok: "Yes",
+						parameters: [
+							string(name: 'IS_APPROVED', defaultValue: 'No', description: 'Changing!!!')
+						]
+                    )
+                    if (IS_APPROVED == 'Yes') {
+						sh ("terraform init -backend-config=.terraform/terraform.tfstate")
 
+					}
+                }
+                
             }
         }
         stage("Terraform Plan"){
