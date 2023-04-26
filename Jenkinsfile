@@ -1,6 +1,7 @@
 pipeline{
     parameters {
         booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
+
     } 
     agent any
     environment{
@@ -33,25 +34,56 @@ pipeline{
             }
            
         }
-        stage('Approval') {
-           when {
-
-               not {
-                   equals expected: true, actual: params.autoApprove
-               }
-           }
-
-           steps {
-               script {
-                    def plan = readFile 'tfplan.txt'
-                    input message: "Do you want to apply the plan?",
-                    parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
-               }
-           }
-        }
         stage('Apply') {
+            when { 
+                not{
+                    environment name: 'ACTION', value: 'apply'
+                }
+            }
             steps {
-                sh "terraform apply -input=false tfplan"
+                script{
+                    def IS_APPROVED = input(
+						message: "Apply Develop Env !?!",
+						ok: "Yes",
+						parameters: [
+							string(name: 'IS_APPROVED', defaultValue: 'No', description: 'Check the plan!!!')
+						]
+                    )
+                    if (IS_APPROVED == 'Yes') {
+						sh "terraform apply -input=false tfplan"
+					}
+                }
+                
+            }
+        }
+        stage("Destroy"){
+            when { 
+                not{
+					environment name: 'ACTION', value: 'destroy';
+				}
+			}
+			steps {
+                script{
+                    def IS_APPROVED = input(
+						message: "Destroy Develop Env !?!",
+						ok: "Yes",
+						parameters: [
+							string(name: 'IS_APPROVED', defaultValue: 'No', description: 'Check the plan!!!')
+						]
+                    )
+                    if (IS_APPROVED == 'Yes') {
+						sh "terraform destroy --auto-approve"
+					}
+                }
+               
+            }
+        }
+        stage("Graphic"){
+            steps{
+                script{
+                    sh "terraform graph -plan=tfplan"
+                    sh "terraform graph | dot -Tsvg > graph.svg"
+                }
             }
         }
     }
