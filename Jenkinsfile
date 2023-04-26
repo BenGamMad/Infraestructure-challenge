@@ -23,7 +23,8 @@ pipeline{
 
         stage("Terraform Init"){
             steps{
-                echo "========INITIALIZING========"
+                echo "========INITIALIZING========"\
+                sh ("terraform init")
                 sh ("terraform init -backend-config=.terraform/terraform.tfstate")
 
             }
