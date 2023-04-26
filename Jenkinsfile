@@ -24,7 +24,7 @@ pipeline{
         stage("Terraform Init"){
             steps{
                 echo "========INITIALIZING========"
-                sh ("terraform init")
+                //sh ("terraform init")
                 script{
                     def IS_APPROVED = input(
 						message: "Change preexisting state !?!",
